@@ -1,0 +1,104 @@
+DROP DATABASE IF EXISTS productOverview;
+
+CREATE DATABASE productOverview;
+
+USE productOverview;
+
+CREATE TABLE IF NOT EXISTS products (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_name VARCHAR(60) NOT NULL,
+  slogan VARCHAR(150) NOT NULL,
+  description VARCHAR(1000) NOT NULL,
+  category VARCHAR(60) NOT NULL,
+  defaultPrice NUMERIC(5, 2) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+CREATE TABLE IF NOT EXISTS features (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  feature VARCHAR(60) NOT NULL,
+  feature_value VARCHAR(60) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY(product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS styles (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  style_name VARCHAR(60) NOT NULL,
+  original_price NUMERIC(5, 2) NOT NULL,
+  sale_price NUMERIC(5, 2) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY(product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS photos (
+  id INT NOT NULL AUTO_INCREMENT,
+  style_id INT NOT NULL,
+  thumbnail_url VARCHAR(512) NOT NULL,
+  photo_url VARCHAR(512) NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY(style_id) REFERENCES styles(id)
+);
+
+CREATE TABLE IF NOT EXISTS skus (
+  id INT NOT NULL AUTO_INCREMENT,
+  style_id INT NOT NULL,
+  size VARCHAR(15) NOT NULL,
+  quantity SMALLINT NOT NULL,
+  PRIMARY KEY (id),
+  FOREIGN KEY(style_id) REFERENCES styles(id)
+);
+
+CREATE TABLE IF NOT EXISTS related_products (
+  id INT NOT NULL AUTO_INCREMENT,
+  product_id INT NOT NULL,
+  related_id INT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY(product_id) REFERENCES products(id),
+  FOREIGN KEY(related_id) REFERENCES products(id)
+);
+
+LOAD DATA LOCAL INFILE 'csv/product.csv'
+INTO TABLE products
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'csv/features.csv'
+INTO TABLE features
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'csv/styles.csv'
+INTO TABLE styles
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'csv/photos.csv'
+INTO TABLE photos
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'csv/skus.csv'
+INTO TABLE skus
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
+LOAD DATA LOCAL INFILE 'csv/related.csv'
+INTO TABLE related_products
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS;
+
