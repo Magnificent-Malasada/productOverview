@@ -1,0 +1,33 @@
+{
+  "name": "productoverview",
+  "version": "1.0.0",
+  "description": "##Overview:",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server/index.js",
+    "mysql": "mysql -u root -p",
+    "schema": "mysql -u root -p < schema/schema.sql",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magnificent-Malasada/productOverview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Magnificent-Malasada/productOverview/issues"
+  },
+  "homepage": "https://github.com/Magnificent-Malasada/productOverview#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "frisbee": "^3.1.4",
+    "jest": "^27.0.5",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "frisby": "^2.1.3"
+  }
+}
